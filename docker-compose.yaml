@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  poc_gh_actions:
+    image: latest_poc1
+    container_name: latest_poc1_container
+    expose:
+      - '8080'
+    ports:
+      - '16081:8080'
+    networks:
+      main:
+        ipv4_address: 172.20.0.14
+    restart: always
+
+  poc_gh_actions2:
+    image: latest_poc2
+    container_name: latest_poc2_container
+    expose:
+      - '8080'
+    ports:
+      - '16082:8080'
+    networks:
+      main:
+        ipv4_address: 172.20.0.15
+    depends_on:
+      - poc_gh_actions
+    restart: always
+
+networks:
+  main:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
